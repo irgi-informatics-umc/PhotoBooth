@@ -984,3 +984,51 @@ video {
     transition-duration: 0.01ms !important;
   }
 }
+
+@media (max-width: 900px) {
+
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .template-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sticker-palette {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .control-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .preview-panel {
+    order: -1;
+  }
+
+  .canvas-frame {
+    max-height: 78vh;
+    overflow: auto;
+  }
+
+  #collageCanvas {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
+  }
+
+  .shot-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+}
