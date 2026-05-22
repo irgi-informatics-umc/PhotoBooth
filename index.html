@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff0f6">
+  <title>NessPhotoBooth</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+  <div class="app-shell" data-mode="dark">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="NessPhotoBooth home">
+        <span class="brand-mark">NP</span>
+        <span>
+          <strong>NessPhotoBooth</strong>
+          <small>Ness Memories</small>
+        </span>
+      </a>
+
+      <nav class="top-actions" aria-label="Quick actions">
+        <button class="icon-button" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">
+          Moon
+        </button>
+        <button class="icon-button" id="fullscreenBtn" type="button" title="Fullscreen" aria-label="Fullscreen">
+          Full
+        </button>
+      </nav>
+    </header>
+
+    <main class="workspace">
+      <section class="studio-panel" aria-label="Camera studio">
+        <div class="camera-card">
+          <div class="camera-toolbar">
+            <div class="status-pill" id="cameraStatus">
+              <span class="status-dot"></span>
+              <span>Camera idle</span>
+            </div>
+            <div class="shot-progress" id="shotProgress" aria-label="Shot progress"></div>
+          </div>
+
+          <div class="camera-stage" id="cameraStage">
+            <video id="video" autoplay muted playsinline></video>
+            <canvas id="captureCanvas" hidden></canvas>
+            <div class="camera-placeholder" id="cameraPlaceholder">
+              <span class="placeholder-icon">NP</span>
+              <h1>Ness Booth</h1>
+              <p>Pick a cute photobooth style, add stickers, then make your own Ness Cuts strip.</p>
+            </div>
+            <div class="filter-layer" id="filterLayer"></div>
+            <div class="countdown" id="countdown" aria-live="polite"></div>
+            <div class="flash" id="flash"></div>
+            <div class="focus-frame" aria-hidden="true"></div>
+          </div>
+
+          <div class="control-grid">
+            <button class="primary-button" id="startCameraBtn" type="button">
+              <span>Start Camera</span>
+            </button>
+            <button class="secondary-button" id="captureBtn" type="button" disabled>
+              <span>Capture Strip</span>
+            </button>
+            <button class="secondary-button" id="retakeBtn" type="button" disabled>
+              <span>Retake</span>
+            </button>
+            <button class="ghost-button" id="stopCameraBtn" type="button" disabled>
+              <span>Stop</span>
+            </button>
+          </div>
+
+          <div class="mobile-hint">Keyboard: Space capture, R retake, F fullscreen, T theme</div>
+        </div>
+
+        <div class="settings-grid">
+          <article class="tool-panel">
+            <div class="panel-heading">
+              <h2>Template</h2>
+              <span id="templateName">Ness Classic</span>
+            </div>
+            <div class="template-grid" id="templateGrid"></div>
+          </article>
+
+          <article class="tool-panel">
+            <div class="panel-heading">
+              <h2>Filters</h2>
+              <span id="filterName">Clean</span>
+            </div>
+            <div class="segmented" id="filterControls" role="listbox" aria-label="Realtime filters"></div>
+          </article>
+
+          <article class="tool-panel sticker-panel">
+            <div class="panel-heading">
+              <h2>Stickers</h2>
+              <span id="stickerHint">Add a sticker, then drag it on the collage preview.</span>
+            </div>
+            <div class="sticker-palette" id="stickerPalette" aria-label="Sticker palette"></div>
+            <div class="sticker-actions" aria-label="Sticker editing controls">
+              <button class="mini-button" id="rotateStickerLeft" type="button" disabled>Rotate -</button>
+              <button class="mini-button" id="rotateStickerRight" type="button" disabled>Rotate +</button>
+              <button class="mini-button" id="shrinkSticker" type="button" disabled>Small</button>
+              <button class="mini-button" id="growSticker" type="button" disabled>Big</button>
+              <button class="mini-button danger" id="removeSticker" type="button" disabled>Remove</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <aside class="preview-panel" aria-label="Final collage preview">
+        <div class="preview-header">
+          <div>
+            <p class="eyebrow">Ness Preview</p>
+            <h2>Your Ness Cut</h2>
+          </div>
+          <div class="export-toggle" aria-label="Export format">
+            <button id="pngBtn" class="format-button active" type="button">PNG</button>
+            <button id="jpgBtn" class="format-button" type="button">JPG</button>
+          </div>
+        </div>
+
+        <div class="canvas-frame">
+          <canvas id="collageCanvas" aria-label="Generated photo strip"></canvas>
+          <div class="empty-preview" id="emptyPreview">
+            <span>Take photos to generate your NessPhotoBooth collage</span>
+          </div>
+        </div>
+
+        <div class="download-row">
+          <button class="primary-button" id="downloadBtn" type="button" disabled>Download</button>
+          <button class="ghost-button" id="saveHistoryBtn" type="button" disabled>Save Preview</button>
+        </div>
+
+        <div class="gallery-block">
+          <div class="panel-heading compact">
+            <h2>Shots</h2>
+            <span id="photoCount">0 / 4</span>
+          </div>
+          <div class="shot-gallery" id="shotGallery"></div>
+        </div>
+
+        <div class="gallery-block">
+          <div class="panel-heading compact">
+            <h2>History</h2>
+            <button class="text-button" id="clearHistoryBtn" type="button">Clear</button>
+          </div>
+          <div class="history-gallery" id="historyGallery"></div>
+        </div>
+      </aside>
+    </main>
+
+    <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
